@@ -54,15 +54,15 @@ def main():
 #####################
 ### Convert Files ###
 #####################
-    fileNameList = ['Organization','Program','Location','Service','Contact','Phone','Physical_Address']    
+    fileNameList = ['Organization','Program','Location','Service','Contact','Phone','Physical_Address','Taxonomy']    
     requiredFiles = ['Organization','Location','Service','Phone']
-    outputFiles = {'Organization':'organizations.csv','Program':'programs.csv','Location':'locations.csv','Service':'services.csv','Contact':'contacts.csv','Phone':'phones.csv','Physical_Address':'addresses.csv'}
+    outputFiles = {'Organization':'organizations.csv','Program':'programs.csv','Location':'locations.csv','Service':'services.csv','Contact':'contacts.csv','Phone':'phones.csv','Physical_Address':'addresses.csv','Taxonomy':'taxonomy.csv'}
     renameColumns = {'Organization':{'url':'website', 'year_incorporated':'date_incorporated'},
                      'Service':{'url':'website'}}
     removeColumns = {'Service':['organization_id'],'Phone':['type'],'Physical_Address':['attention','address_3','address_4']}
     addtlColumns = {'Organization':['legal_status','accreditations','funding_sources','licenses'], 
                     'Location':['accessibility','admin_emails','alternate_name','description','email','languages','short_desc','website','virtual'],
-                    'Service':['accepted_payments','description','eligibility','fees','funding_sources','interpretation_services','keywords','languages','required_documents','service_areas','taxonomy_ids'],
+                    'Service':['accepted_payments','description','eligibility','fees','funding_sources','interpretation_services','keywords','languages','required_documents','service_areas'],
                     'Contact':['location_id'],'Phone':['vanity_number','number_type','country_prefix']}
     fixColumns = {'Organization':{'website':'cleanURL'},'Location':{'description':'setLocDesc','virtual':'setFalse'},'Service':{'website':'cleanURL','description':'setNoneProvided'},'Phone':{'number_type':'setVoice'}}
     reArrangeColumns = {'Organization':['id', 'name', 'alternate_name', 'description', 'email', 'website', 'legal_status', 'tax_status', 'tax_id', 'date_incorporated', 'accreditations', 'funding_sources', 'licenses'], 
@@ -71,7 +71,8 @@ def main():
                         'Service':['id','location_id','program_id','accepted_payments','alternate_name','application_process','description','eligibility','email','fees','funding_sources','interpretation_services','keywords','languages','name','required_documents','service_areas','status','wait_time','website','taxonomy_ids'],
                         'Contact':['id','location_id','organization_id','service_id','name','title','email','department'],
                         'Phone':['id','location_id','contact_id','organization_id','service_id','number','vanity_number','extension','department','number_type','country_prefix'],
-                        'Physical_Address':['id','location_id','address_1','address_2','city','state_province','postal_code','country']}                        
+                        'Physical_Address':['id','location_id','address_1','address_2','city','state_province','postal_code','country'],
+                        'Taxonomy':['taxonomy_id','name','parent_id','parent_name']}                        
     
     # Fix programs
     cleanURL = lambda x: 'http://' + x if 'http' not in x and len(x.strip()) > 0 else x.strip()
